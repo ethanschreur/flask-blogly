@@ -5,13 +5,11 @@ from models import db, User, Post
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly_test_db'
 app.config['SQLALCHEMY_ECHO']=False
 app.config['TESTING']=True
-db.drop_all()
-db.create_all()
 
 class UserModelTestCase(TestCase):
     def setUp(self):
-        User.query.delete()
-        Post.query.delete()
+        db.drop_all()
+        db.create_all()
         user = User(first_name="Test_First", last_name="Test_Last", image_url = "https://scontent-ort2-2.xx.fbcdn.net/v/t1.0-9/92392533_1929214157209094_5872836043148886016_o.jpg?_nc_cat=107&ccb=3&_nc_sid=09cbfe&_nc_ohc=vWSVf2t0ZkcAX_SCvtJ&_nc_oc=AQmJz-rO5dcOYX7bJvVOxu2DutdTyItvJLCht69zvDThLk8f7kNBWCYKJn62Ys_lXKk&_nc_ht=scontent-ort2-2.xx&oh=20151e96f7714259582a3f9a1372fcb6&oe=60515C2E")
         db.session.add(user)
         db.session.commit()
@@ -23,9 +21,9 @@ class UserModelTestCase(TestCase):
     def test_users(self):
         with app.test_client() as client:
             resp = client.get('/users')
-            # html = resp.get_data(as_text=True)
-            # self.assertEqual(resp.status_code, 200)
-            # self.assertIn('Test_First Test_Last', html)
+            html = resp.get_data(as_text=True)
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn('Test_First Test_Last', html)
 
     def test_add_user(self):
         with app.test_client() as client:

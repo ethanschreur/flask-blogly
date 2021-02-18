@@ -18,7 +18,7 @@ class User(db.Model):
 
     image_url = db.Column(db.Text, nullable=False, default="https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg")
 
-
+    Post = db.relationship('Post', backref="user", cascade="all, delete-orphan")
 
 class Post(db.Model):
     __tablename__ = "Posts"
@@ -32,6 +32,7 @@ class Post(db.Model):
     created_at = db.Column(db.DateTime, nullable = False, default=datetime.now())
 
     user_id = db.Column(db.Integer, db.ForeignKey('Users.id'),  nullable=False)
-
-    user = db.relationship('User', backref="Post")
+    
+    # user = db.relationship('User', backref="Post",)
+  
 
