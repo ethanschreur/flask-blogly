@@ -13,9 +13,18 @@ Title <input type="text" name="title" value="{{post.title}}">
 Content <textarea name="content">{{post.content}}</textarea>
 <br>
 <br>
+Tags:
+{% for tag in tags %}
+{% if tag in post.tags %}
+<input type="checkbox" name="tag" checked value="{{tag.id}}">{{tag.name}}
+{% else %}
+<input type="checkbox" name="tag" value="{{tag.id}}">{{tag.name}}
+{% endif %}
+{% endfor %}
+<br>
+<br>
 <a><button>Save</button></a>
 </form>
 <br>
 <a href="/posts/{{post.id}}"><button>Cancel</button></a>
-
 {% endblock %}

@@ -11,6 +11,13 @@
 By {{post.user.first_name}} {{post.user.last_name}}
 <br>
 <br>
+Tags: 
+<span>
+    {% for tags in post.tags %}<a href="/tags/{{tags.id}}">{{tags.name}}</a><span> </span>
+    {% endfor %}
+</span>
+<br>
+<br>
 <a href="/users/{{post.user.id}}"><button>Cancel</button></a>
 <a href="/posts/{{post.id}}/edit"><button>Edit</button></a>
 <a href="/posts/{{post.id}}/delete"><button>Delete</button></a>
